@@ -2,6 +2,8 @@
 
 Hapi radius plugin.
 
+This plugin is in the very early stages of development.  Pleast note that a working radius server is required in order for the tests to pass.  I will remedy this as soon as possible.
+
 
 ## Install
 ```bash
