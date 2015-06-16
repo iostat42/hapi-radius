@@ -1,4 +1,4 @@
-# hapi-radius
+# hapi-radius  https://travis-ci.org/iostat42/hapi-radius.svg
 
 Hapi radius plugin.
 
