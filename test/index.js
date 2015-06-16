@@ -7,6 +7,7 @@ var Hoek = require('hoek');
 var _ = require('lodash');
 var Config = require('./artifacts/config');
 var Pkg = require('../package.json');
+var MockRadius = require('mock-radius');
 
 
 // Declare internals
@@ -39,7 +40,9 @@ var afterEach = lab.afterEach;
 
 // radius client
 // authentication success
-// authentication with bad credentials
+// authentication with bad credentials]
+
+internals.mockradius = new MockRadius();
 
 
 internals.pluginName = 'hapi-radius';
@@ -104,6 +107,14 @@ describe('hapi-radius', function () {
 
     var server;
 
+
+    before(function (done) {
+
+        internals.mockradius.bind();
+        done();
+    });
+
+
     beforeEach(function (done) {
 
         server = new Hapi.Server();
@@ -164,7 +175,8 @@ describe('hapi-radius', function () {
         var validate = server.plugins[internals.pluginName].validate;
         var opts = server.plugins[internals.pluginName].clientOptions;
 
-        opts.host = '127.0.0.1';
+        // opts.host = '127.0.0.1';
+        opts.host = '192.168.1.2';
         opts.timeout = 10;
         opts.retries = 1;
 
