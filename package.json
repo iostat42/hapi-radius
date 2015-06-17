@@ -1,7 +1,7 @@
 {
   "name": "hapi-radius",
   "version": "0.0.5",
-  "description": "Hapi radius plugin.",
+  "description": "Hapi RADIUS plugin.",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/lab/bin/lab -c -L",
@@ -27,8 +27,8 @@
     "code": "1.x.x",
     "hapi": "8.x.x",
     "lab": "5.x.x",
-    "mock-radius": "0.0.1",
-    "radius": "^1.1.0"
+    "mock-radius": "0.0.x",
+    "radius": "1.x.x"
   },
   "dependencies": {
     "hoek": "2.x.x",
