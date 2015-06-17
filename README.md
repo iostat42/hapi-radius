@@ -18,18 +18,17 @@ git clone https://github.com/iostat42/hapi-radius.git
 {
     register: require('../..'),
     options: {
-        client: {
-            ipAddress: '192.168.1.10',
-            secret: 'mySharedSecret'
-        },
+        ipAddress: '192.168.1.10',
+        secret: 'mySharedSecret',
         options: {
             host: [ 'radiusA', 'radiusB' ], // accepts single or array of hosts
+            port: 1812
         }
     }
 }
 ```
 
-#### Testing Config:
+#### Override testing default config:
 
 ##### Create test/artifacts/config.js
 
@@ -39,10 +38,8 @@ var config = {};
 // Radius
 
 config.radius = {
-    client: {
-        ipAddress: '192.168.1.10',
-        secret: 'mySharedSecret'
-    },
+    ipAddress: '192.168.1.10',
+    secret: 'mySharedSecret',
     options: {
         host: [ 'radiusA', 'radiusB' ], // accepts single or array of hosts
     }
