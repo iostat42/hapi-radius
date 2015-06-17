@@ -89,9 +89,20 @@ internals.server = function (options) {
 
 // merge test config with defaults
 
+var testconfig = './artifacts/config2';
+
+
+if (internals.moduleExists('./artifacts/config2')) {
+    testconfig = require('./artifacts/config2');
+}
+else {
+    testconfig = {};
+}
+
+
 var Config = Hoek.applyToDefaults(
     internals.defaults,
-    internals.moduleExists(require('./artifacts/config')) || {}
+    testconfig
 );
 
 
