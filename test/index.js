@@ -5,7 +5,6 @@ var Code = require('code');
 var Hapi = require('hapi');
 var Hoek = require('hoek');
 var _ = require('lodash');
-var TestConfig = require('./artifacts/config');
 var Pkg = require('../package.json');
 var MockRadius = require('mock-radius');
 
@@ -61,15 +60,21 @@ internals.defaults.plugins = [
 internals.defaults.pluginOptions = {};
 
 
-// merge test config with defaults
-
-var Config = Hoek.applyToDefaults(internals.defaults, TestConfig || {});
-
-
 internals.mockradius = new MockRadius();
 
 
 internals.pluginName = 'hapi-radius';
+
+
+internals.moduleExists = function (name) {
+
+    try {
+        return require.resolve(name);
+    }
+    catch(e) {
+        return false;
+    }
+};
 
 
 internals.server = function (options) {
@@ -82,15 +87,12 @@ internals.server = function (options) {
 };
 
 
-internals.register = function (server, options, callback) {
+// merge test config with defaults
 
-    server.register(Config.plugins, function (err) {
-
-        expect(err).to.not.exist();
-
-        return server;
-    });
-};
+var Config = Hoek.applyToDefaults(
+    internals.defaults,
+    internals.moduleExists(require('./artifacts/config')) || {}
+);
 
 
 // Tests
