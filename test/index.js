@@ -5,7 +5,7 @@ var Code = require('code');
 var Hapi = require('hapi');
 var Hoek = require('hoek');
 var _ = require('lodash');
-var Config = require('./artifacts/config');
+var TestConfig = require('./artifacts/config');
 var Pkg = require('../package.json');
 var MockRadius = require('mock-radius');
 
@@ -27,20 +27,44 @@ var after = lab.after;
 var afterEach = lab.afterEach;
 
 
-// tests todo:
+// defaults
 
-// plugin
-// registration success
-// registration handles failure
+internals.defaults = {};
 
 
-// config
-// one host or array
-// defaults/minimum options
+internals.defaults.radius = {
+    ipAddress: '127.0.0.1',
+    secret: 'radiusSuperSecret',
+    options: {
+        host: [ '127.0.0.1' ], // accepts single or array of hosts
+        port: 1812
+    }
+};
 
-// radius client
-// authentication success
-// authentication with bad credentials]
+
+// user to for auth testing
+
+internals.defaults.user = {
+    userName: 'hulk',
+    password: 'smash12345'
+};
+
+
+internals.defaults.plugins = [
+  {
+    register: require('..'),
+    options: internals.defaults.radius
+  }
+];
+
+
+internals.defaults.pluginOptions = {};
+
+
+// merge test config with defaults
+
+var Config = Hoek.applyToDefaults(internals.defaults, TestConfig || {});
+
 
 internals.mockradius = new MockRadius();
 
