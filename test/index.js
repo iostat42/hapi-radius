@@ -41,7 +41,7 @@ internals.defaults.radius = {
 };
 
 
-// user to for auth testing
+// user to use for auth testing
 
 internals.defaults.user = {
     userName: 'hulk',
@@ -58,11 +58,6 @@ internals.defaults.plugins = [
 
 
 internals.defaults.pluginOptions = {};
-
-
-// mock radius server for all tests
-
-internals.mockradius = new MockRadius();
 
 
 internals.pluginName = 'hapi-radius';
@@ -160,24 +155,7 @@ describe('Plugin Registration', function () {
             done();
         });
     });
-
-
-    it('registers successfully with a single host (non-array)', function (done) {
-
-        var server = internals.server({});
-
-        var newPluginConfig = Hoek.clone(Config.plugins);
-
-        newPluginConfig[0].options.options.host = _.sample(newPluginConfig[0].options.options.host);
-
-        server.register(newPluginConfig, function (err) {
-
-            expect(err).to.not.exist();
-            done();
-        });
-    });
 });
-
 
 
 describe('hapi-radius', function () {
@@ -203,6 +181,10 @@ describe('hapi-radius', function () {
     beforeEach(function (done) {
 
         server = new Hapi.Server();
+
+        var newPluginConfig = Hoek.clone(Config.plugins);
+
+        newPluginConfig[0].options.options.host = _.sample(newPluginConfig[0].options.options.host);
 
         server.register(Config.plugins, function (err) {
 
