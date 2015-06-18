@@ -60,6 +60,8 @@ internals.defaults.plugins = [
 internals.defaults.pluginOptions = {};
 
 
+// mock radius server for all tests
+
 internals.mockradius = new MockRadius();
 
 
@@ -79,7 +81,7 @@ internals.moduleExists = function (name) {
 
 internals.server = function (options) {
 
-    if (_.isUndefined || _.isNull) {
+    if (_.isUndefined(options) || _.isNull(options)) {
         options = {};
     }
 
@@ -110,6 +112,22 @@ var Config = Hoek.applyToDefaults(
 
 describe('Plugin Registration', function () {
 
+    before(function (done) {
+
+        internals.mockradius = new MockRadius();
+        internals.mockradius.bind();
+        done();
+    });
+
+
+    after(function (done) {
+
+        internals.mockradius.close();
+        internals.mockradius = null;
+        done();
+    });
+
+
     it('registers successfully', function (done) {
 
         var server = internals.server({});
@@ -124,7 +142,7 @@ describe('Plugin Registration', function () {
 
     it('handles register errors', function (done) {
 
-        // invalid config to trigger an error
+        // create an invalid config to trigger an error
         var server = internals.server({});
 
         var newPluginConfig = Hoek.clone(Config.plugins);
@@ -166,10 +184,18 @@ describe('hapi-radius', function () {
 
     var server;
 
-
     before(function (done) {
 
+        internals.mockradius = new MockRadius();
         internals.mockradius.bind();
+        done();
+    });
+
+
+    after(function (done) {
+
+        internals.mockradius.close();
+        internals.mockradius = null;
         done();
     });
 
@@ -190,7 +216,12 @@ describe('hapi-radius', function () {
 
         var validate = server.plugins[internals.pluginName].validate;
 
+        var clientOptions = server.plugins[internals.pluginName].clientOptions;
+
         expect(validate).to.be.a.function();
+
+        expect(clientOptions).to.be.an.object();
+
         done();
     });
 
@@ -227,27 +258,4 @@ describe('hapi-radius', function () {
             done();
         });
     });
-
-
-    // it('handles an internal server error', function (done) {
-
-    //     var validate = server.plugins[internals.pluginName].validate;
-    //     var opts = server.plugins[internals.pluginName].clientOptions;
-
-    //     // opts.host = '127.0.0.1';
-    //     opts.host = '192.168.1.2';
-    //     opts.timeout = 10;
-    //     opts.retries = 1;
-
-    //     var user = Hoek.clone(Config.user);
-
-    //     var userName = user.userName + '44';
-    //     var password = user.password + '44';
-
-    //     validate(userName, password, function (err, isValid, credentials) {
-
-    //         expect(err).to.exist();
-    //         done();
-    //     });
-    // });
 });

@@ -27,7 +27,7 @@
     "code": "1.x.x",
     "hapi": "8.x.x",
     "lab": "5.x.x",
-    "mock-radius": "0.0.3",
+    "mock-radius": "0.0.x",
     "radius": "1.x.x"
   },
   "dependencies": {
