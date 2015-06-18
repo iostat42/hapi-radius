@@ -1,6 +1,6 @@
 {
   "name": "hapi-radius",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Hapi RADIUS plugin.",
   "main": "index.js",
   "scripts": {
