@@ -7,7 +7,7 @@ module.exports = {
         ipAddress: '192.168.1.10',
         secret: 'ThisIsMySharedSecret',
         options: {
-            host: [ 'radiusA', 'radiusB' ],
+            host: ['radiusA', 'radiusB'],
             port: 1812
         }
     }

@@ -35,7 +35,7 @@ internals.defaults.radius = {
     ipAddress: '127.0.0.1',
     secret: 'radiusSuperSecret',
     options: {
-        host: [ '127.0.0.1' ], // accepts single or array of hosts
+        host: ['127.0.0.1'], // accepts single or array of hosts
         port: 1812
     }
 };
