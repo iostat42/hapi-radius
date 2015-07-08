@@ -1,6 +1,8 @@
 # hapi-radius
 
-[![Build Status](https://travis-ci.org/iostat42/hapi-radius.svg?branch=master)](https://travis-ci.org/iostat42/hapi-radius) [![Join the chat at https://gitter.im/iostat42/hapi-radius](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/iostat42/hapi-radius?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/iostat42/hapi-radius.svg?branch=master)](https://travis-ci.org/iostat44/hapi-radius) 
+[![Join the chat at https://gitter.im/iostat42/hapi-radius](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/iostat42/hapi-radius?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) 
+[![Codacy Badge](https://www.codacy.com/project/badge/1865f6e381e74002a5d333042902127d)](https://www.codacy.com/app/iostat42/hapi-radius)
 
 Hapi radius plugin.
 
