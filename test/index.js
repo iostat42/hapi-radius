@@ -5,7 +5,6 @@ var Code = require('code');
 var Hapi = require('hapi');
 var Hoek = require('hoek');
 var _ = require('lodash');
-var Pkg = require('../package.json');
 var MockRadius = require('mock-radius');
 
 
@@ -23,7 +22,6 @@ var expect = Code.expect;
 var before = lab.before;
 var beforeEach = lab.beforeEach;
 var after = lab.after;
-var afterEach = lab.afterEach;
 
 
 // defaults
