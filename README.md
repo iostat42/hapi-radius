@@ -1,5 +1,7 @@
 # hapi-radius  [![Build Status](https://travis-ci.org/iostat42/hapi-radius.svg?branch=master)](https://travis-ci.org/iostat42/hapi-radius)
 
+[![Join the chat at https://gitter.im/iostat42/hapi-radius](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/iostat42/hapi-radius?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Hapi radius plugin.
 
 This plugin is in the very early stages of development.  Pleast note that a working radius server is required in order for the tests to pass.  I will remedy this as soon as possible.
