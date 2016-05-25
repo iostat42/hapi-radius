@@ -1,27 +1,29 @@
+'use strict';
+
 // Load modules
 
-var Lab = require('lab');
-var Code = require('code');
-var Hapi = require('hapi');
-var Hoek = require('hoek');
-var _ = require('lodash');
-var MockRadius = require('mock-radius');
+const Lab = require('lab');
+const Code = require('code');
+const Hapi = require('hapi');
+const Hoek = require('hoek');
+const _ = require('lodash');
+const MockRadius = require('mock-radius');
 
 
 // Declare internals
 
-var internals = {};
+const internals = {};
 
 
 // Test shortcuts
 
-var lab = exports.lab = Lab.script();
-var describe = lab.experiment;
-var it = lab.test;
-var expect = Code.expect;
-var before = lab.before;
-var beforeEach = lab.beforeEach;
-var after = lab.after;
+const lab = exports.lab = Lab.script();
+const describe = lab.experiment;
+const it = lab.test;
+const expect = Code.expect;
+const before = lab.before;
+const beforeEach = lab.beforeEach;
+const after = lab.after;
 
 
 // defaults
@@ -48,10 +50,10 @@ internals.defaults.user = {
 
 
 internals.defaults.plugins = [
-  {
-    register: require('..'),
-    options: internals.defaults.radius
-  }
+    {
+        register: require('..'),
+        options: internals.defaults.radius
+    }
 ];
 
 
@@ -66,7 +68,7 @@ internals.moduleExists = function (name) {
     try {
         return require.resolve(name);
     }
-    catch(e) {
+    catch (e) {
         return false;
     }
 };
@@ -84,7 +86,7 @@ internals.server = function (options) {
 
 // merge test config with defaults
 
-var TestConfig = './artifacts/config';
+let TestConfig = './artifacts/config';
 
 
 if (internals.moduleExists('./artifacts/config')) {
@@ -95,7 +97,7 @@ else {
 }
 
 
-var Config = Hoek.applyToDefaults(
+const Config = Hoek.applyToDefaults(
     internals.defaults,
     TestConfig
 );
@@ -103,9 +105,9 @@ var Config = Hoek.applyToDefaults(
 
 // Tests
 
-describe('Plugin Registration', function () {
+describe('Plugin Registration', () => {
 
-    before(function (done) {
+    before((done) => {
 
         internals.mockradius = new MockRadius();
         internals.mockradius.bind();
@@ -113,7 +115,7 @@ describe('Plugin Registration', function () {
     });
 
 
-    after(function (done) {
+    after((done) => {
 
         internals.mockradius.close();
         internals.mockradius = null;
@@ -121,11 +123,11 @@ describe('Plugin Registration', function () {
     });
 
 
-    it('registers successfully', function (done) {
+    it('registers successfully', (done) => {
 
-        var server = internals.server({});
+        const server = internals.server({});
 
-        server.register(Config.plugins, function (err) {
+        server.register(Config.plugins, (err) => {
 
             expect(err).to.not.exist();
             done();
@@ -133,12 +135,12 @@ describe('Plugin Registration', function () {
     });
 
 
-    it('handles register errors', function (done) {
+    it('handles register errors', (done) => {
 
         // create an invalid config to trigger an error
-        var server = internals.server({});
+        const server = internals.server({});
 
-        var newPluginConfig = Hoek.clone(Config.plugins);
+        const newPluginConfig = Hoek.clone(Config.plugins);
 
         delete newPluginConfig[0].options.ipAddress;
         delete newPluginConfig[0].options.secret;
@@ -147,7 +149,7 @@ describe('Plugin Registration', function () {
             secret: 'radiusSuperSecret'
         };
 
-        server.register(newPluginConfig, function (err) {
+        server.register(newPluginConfig, (err) => {
 
             expect(err).to.exist();
             done();
@@ -156,11 +158,11 @@ describe('Plugin Registration', function () {
 });
 
 
-describe('hapi-radius', function () {
+describe('hapi-radius', () => {
 
-    var server;
+    let server;
 
-    before(function (done) {
+    before((done) => {
 
         internals.mockradius = new MockRadius();
         internals.mockradius.bind();
@@ -168,7 +170,7 @@ describe('hapi-radius', function () {
     });
 
 
-    after(function (done) {
+    after((done) => {
 
         internals.mockradius.close();
         internals.mockradius = null;
@@ -176,15 +178,15 @@ describe('hapi-radius', function () {
     });
 
 
-    beforeEach(function (done) {
+    beforeEach((done) => {
 
         server = new Hapi.Server();
 
-        var newPluginConfig = Hoek.clone(Config.plugins);
+        const newPluginConfig = Hoek.clone(Config.plugins);
 
         newPluginConfig[0].options.options.host = _.sample(newPluginConfig[0].options.options.host);
 
-        server.register(Config.plugins, function (err) {
+        server.register(Config.plugins, (err) => {
 
             expect(err).to.not.exist();
             done();
@@ -192,11 +194,11 @@ describe('hapi-radius', function () {
     });
 
 
-    it('validate function is exposed to server', function (done) {
+    it('validate function is exposed to server', (done) => {
 
-        var validate = server.plugins[internals.pluginName].validate;
+        const validate = server.plugins[internals.pluginName].validate;
 
-        var clientOptions = server.plugins[internals.pluginName].clientOptions;
+        const clientOptions = server.plugins[internals.pluginName].clientOptions;
 
         expect(validate).to.be.a.function();
 
@@ -206,11 +208,11 @@ describe('hapi-radius', function () {
     });
 
 
-    it('authenticates a user', function (done) {
+    it('authenticates a user', (done) => {
 
-        var validate = server.plugins[internals.pluginName].validate;
+        const validate = server.plugins[internals.pluginName].validate;
 
-        validate(Config.user.userName, Config.user.password, function (err, isValid, credentials) {
+        validate(Config.user.userName, Config.user.password, (err, isValid, credentials) => {
 
             expect(err).to.not.exist();
             expect(isValid).to.be.equal(true);
@@ -221,16 +223,16 @@ describe('hapi-radius', function () {
     });
 
 
-    it('fails to authenticate a user with bad credentials', function (done) {
+    it('fails to authenticate a user with bad credentials', (done) => {
 
-        var validate = server.plugins[internals.pluginName].validate;
+        const validate = server.plugins[internals.pluginName].validate;
 
-        var user = Hoek.clone(Config.user);
+        const user = Hoek.clone(Config.user);
 
-        var userName = user.userName + '44';
-        var password = user.password + '44';
+        const userName = user.userName + '44';
+        const password = user.password + '44';
 
-        validate(userName, password, function (err, isValid, credentials) {
+        validate(userName, password, (err, isValid, credentials) => {
 
             expect(err).to.not.exist();
             expect(isValid).to.be.equal(false);

@@ -24,16 +24,16 @@
   },
   "homepage": "https://github.com/iostat42/hapi-radius",
   "devDependencies": {
-    "code": "1.x.x",
-    "hapi": "8.x.x",
-    "lab": "5.x.x",
+    "code": "3.x.x",
+    "hapi": "13.x.x",
+    "lab": "10.x.x",
     "mock-radius": "0.0.x",
     "radius": "1.x.x"
   },
   "dependencies": {
-    "hoek": "2.x.x",
-    "joi": "6.x.x",
-    "lodash": "3.x.x",
+    "hoek": "4.x.x",
+    "joi": "8.x.x",
+    "lodash": "4.x.x",
     "radclient": "1.x.x"
   }
 }
